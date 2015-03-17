@@ -1,0 +1,24 @@
+{
+  "name": "Game-on",
+  "version": "0.0.1",
+  "description": "A game scheduling app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Game-on"
+  },
+  "keywords": [
+    "game",
+    "league",
+    "leader",
+    "boards"
+  ],
+  "author": "Rukayat Sadiq",
+  "license": "ISC",
+  "dependencies": {
+    "jade": "^1.9.2"
+  }
+}
