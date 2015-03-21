@@ -1,0 +1,26 @@
+{
+  "name": "Game-on",
+  "version": "0.0.1",
+  "homepage": "https://github.com/andela-rsadiq/Game-on",
+  "authors": [
+    "andela-rsadiq <rukayat.sadiq@andela.co>"
+  ],
+  "description": "A game scheduling",
+  "main": "server.js",
+  "moduleType": [
+    "es6",
+    "globals"
+  ],
+  "keywords": [
+    "game"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ]
+}

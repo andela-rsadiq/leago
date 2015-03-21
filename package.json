@@ -19,6 +19,12 @@
   "author": "Rukayat Sadiq",
   "license": "ISC",
   "dependencies": {
-    "jade": "^1.9.2"
+    "body-parser": "~1.4.2",
+    "cors": "^2.5.3",
+    "express": "~4.5.1",
+    "jade": "^1.9.2",
+    "lodash": "^3.5.0",
+    "method-override": "~2.0.2",
+    "mongoose": "~3.8.0"
   }
 }
