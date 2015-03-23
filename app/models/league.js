@@ -2,11 +2,25 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var leagueSchema = new Schema ({
-  team_name: {
+  name: {
     type: String,
-    required: 'Please enter your team name',
-    unique: true
-  }
+    required: "Please enter a name for the tournament!"
+  },
+  
+  durationOfTournament: {
+    type: String,
+    required: true
+  },
+
+  games: [{
+    type: Schema.ObjectId,
+    ref: 'Games'
+  }],
+
+  teams: [{
+    type: Schema.ObjectId,
+    ref: 'Team'
+  }]
 });
 
 var League = mongoose.model('League', leagueSchema);

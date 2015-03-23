@@ -1,12 +1,14 @@
 module.exports = function(app) {
   var playerCtrl = require('../controllers/players')
 
-  app.ExpressRouter.route('/teams/:teamId/players')
-  .get(playerCtrl.getPlayers)
+  app.ExpressRouter.route('/users/:userId/leagues/:leagueId/teams/:teamId/players')
+  .get(playerCtrl.allPlayers)
   .post(playerCtrl.createPlayer);
 
-  app.ExpressRouter.route('/teams/:teamId/players/:playerId')
-  .put(playerCtrl.updatePlayer);
+  app.ExpressRouter.route('/users/:userId/leagues/:leagueId/teams/:teamId/players/:playerId')
+  .get(playerCtrl.getPlayer)
+  .put(playerCtrl.updatePlayer)
+  .delete(playerCtrl.deletePlayer);
 
   app.ExpressRouter.param('playerId', playerCtrl.findPlayer);
 }

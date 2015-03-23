@@ -43,8 +43,12 @@ app.use(cors());
 app.ExpressRouter = express.Router();
 app.use('/', app.ExpressRouter);
 
+// configure our routes
 require('./app/routes/playerRoute')(app);
-require('./app/routes/teamRoute')(app); // configure our routes
+require('./app/routes/teamRoute')(app);
+require('./app/routes/gamesRoute')(app);
+require('./app/routes/leagueRoute')(app);
+require('./app/routes/userRoute')(app);
 
 // start app ===============================================
 // startup our app at http://localhost:8080

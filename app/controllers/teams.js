@@ -1,4 +1,5 @@
-var Team = require('../models/teams.js');
+var Team = require('../models/teams');
+var League = require('../models/league');
 var _ = require('lodash');
 
 module.exports.allTeams = function(req, res) {
@@ -8,15 +9,40 @@ module.exports.allTeams = function(req, res) {
     }
     res.json(teams);
   });
+  //res.json(req.league.teams)
 };
 
 module.exports.createTeam = function(req, res) {
+  /*var team = new Team(req.body);
+
+  team.save(function(err, data) {
+    if(err) {
+      res.send(err);
+    }
+    res.json(data);
+  });*/
+
+  var league = req.league;
+
   var team = new Team(req.body);
 
   team.save(function(err, data) {
-    if(err)
+    if (err) {
       res.send(err);
-    res.json(data);
+    }
+    else {
+      league.teams.push(team);
+      league.save(function(err) {
+        if(err) {
+          res.send(err);
+        }
+        else {
+          res.json({
+            message: "New team has been created!"
+          }); 
+        }
+      });
+    }
   });
 };
 
@@ -37,12 +63,27 @@ module.exports.getTeam = function(req, res) {
 };
 
 module.exports.updateTeam = function(req, res) {
-  console.log(req.body);
   var team = req.team;
   _.extend(team, req.body);
   team.save(function(err, data) {
-    if(err)
+    if(err) {
       res.send(err);
-    res.json(data);
+    }
+    else {
+      res.json(data);
+    }
   });
-}
+};
+
+module.exports.deleteTeam = function(req, res) {
+  Team.remove({
+    _id: req.params.teamId
+  }, function(err, team) {
+    if(err) {
+      res.send(err);
+    }
+    else {
+      res.json({message: "Team has been deleted!"});
+    }
+  });
+};

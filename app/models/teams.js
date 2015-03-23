@@ -19,7 +19,7 @@ var teamSchema = new Schema({
     type: Number
   },
 
-  numberOfGoalsConceeded: {
+  numberOfGoalsConceded: {
     type: Number
   }
 });

@@ -1,25 +1,14 @@
-/*var League = require('../model/league.js');
-
 module.exports = function(app) {
-  var express = require('express');
-  var router = express.Router();
+  var leagueCtrl = require('../controllers/league');
 
-  app.use('/', router);
+  app.ExpressRouter.route('/users/:userId/leagues')
+  .get(leagueCtrl.allLeagues)
+  .post(leagueCtrl.createLeague);
 
-  router.use(function(req, res) {
-    console.log("Something is also happening");
-    next();
-  });
+  app.ExpressRouter.route('/users/:userId/leagues/:leagueId')
+  .get(leagueCtrl.getLeague)
+  .put(leagueCtrl.updateLeague)
+  .delete(leagueCtrl.deleteLeague);
 
-  router.route('/league')
-  .get(function(req, res) {
-    League.find(err, league) {
-      if(err)
-        res.send(err);
-      res.json(league);
-    });
-  })
-  .post(function(req, res) {
-    var player = new Player();
-  })
-}*/
+  app.ExpressRouter.param('leagueId', leagueCtrl.findLeague);
+}
