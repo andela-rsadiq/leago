@@ -37,9 +37,7 @@ module.exports.createTeam = function(req, res) {
           res.send(err);
         }
         else {
-          res.json({
-            message: "New team has been created!"
-          }); 
+          res.json(data); 
         }
       });
     }

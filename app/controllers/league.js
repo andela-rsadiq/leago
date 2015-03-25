@@ -1,5 +1,4 @@
 var League = require('../models/league');
-var User = require('../models/user');
 var _ = require('lodash');
 
 module.exports.allLeagues = function(req, res) {
@@ -10,13 +9,12 @@ module.exports.allLeagues = function(req, res) {
     else {
       console.log(leagues);
       //console.log(1, 'here');
-      res.json(req.user.leagues);
+      res.json(leagues);
     }
   });
 };
 
 module.exports.createLeague = function(req, res) {
-  var user = req.user;
   var league = new League(req.body);
 
   league.save(function(err, league) {
@@ -24,20 +22,12 @@ module.exports.createLeague = function(req, res) {
       res.send(err);
     }
     else {
-      user.eventsScheduled.push(league);
-      user.save(function(err, league) {
-        if(err) {
-          err.send(err);
-        }
-        else{
-        res.json(league);  
-        }
-      });
+      res.json(league);
     }
   });
 };
 
-module.exports.findLeague = function(req, res, next) {
+module.exports.findOneLeague = function(req, res, next) {
   League.findById(req.params.leagueId).populate('teams', 'events').exec(function(err, league) {
     if(err) {
       res.send(err);

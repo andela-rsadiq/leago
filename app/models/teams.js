@@ -12,15 +12,18 @@ var teamSchema = new Schema({
   }],
 
   numberOfGamesPlayed: {
-    type: Number
+    type: Number,
+    default: 0
   },
 
   numberOfGoalsScored: {
-    type: Number
+    type: Number,
+    default: 0
   },
 
   numberOfGoalsConceded: {
-    type: Number
+    type: Number,
+    default: 0
   }
 });
 

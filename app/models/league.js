@@ -13,7 +13,7 @@ var leagueSchema = new Schema ({
   },
 
   games: [{
-    type: Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Games'
   }],
 

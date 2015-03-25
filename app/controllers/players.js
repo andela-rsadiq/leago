@@ -31,9 +31,7 @@ module.exports.createPlayer = function(req, res) {
           res.send(err);
         }
         else {
-          res.json({
-            message: "New player has been created and added to team!"
-          }); 
+          res.json(player); 
         }
       });
     }

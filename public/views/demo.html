@@ -1,0 +1,10 @@
+<div ng-init='getAllUsers()'>
+  <div ng-repeat='user in users'>
+    <div>
+      {{user.fullName}}
+      {{user.emailAddress}}
+      <button ng-click="deleteFile(user)">Delete</button>
+    </div>
+  </div>
+</div>
+

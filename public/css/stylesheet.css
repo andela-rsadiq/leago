@@ -1,0 +1,22 @@
+body a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.87);
+}
+#headerImg {
+  height: 250px;
+  width: 1280px;
+}
+.container {
+  padding: 30px;
+}
+#createLeague {
+  margin-top: 60px;
+  height: 250px;
+}
+#createLeagueBar {
+  width: 100%;
+  background-color: rgb(255,64,129);
+}
+.inputField {
+  width: 90%;
+}

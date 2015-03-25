@@ -1,0 +1,34 @@
+<md-content layout='row'>
+  <div flex='66'>
+  <p>ACTIVE LEAGUES</p>
+    <md-card ng-repeat='league in leagues'>
+
+      <md-card-content>
+        <a href='#/leagues/{{league._id}}'>
+          <strong>{{league.name}}</strong>
+          <br>
+          <small>{{league.durationOfTournament}}</small>
+        </a>
+      </md-card-content>
+    </md-card>
+  </div>
+  <md-card flex id='createLeague'>
+    <md-toolbar id='createLeagueBar'>
+      <h2 class="md-toolbar-tools">
+        <span>Create New League</span>
+      </h2>
+    </md-toolbar>
+    <md-card-content>
+      <form id='inputField'>
+        <input type="text" placeholder='Enter Name of Tournamemnt' ng-model='league.name' class='inputField'>
+        <br>
+        <br>
+        <input type="text" placeholder='Enter the duration of the Tournament' ng-model='league.durationOfTournament' class='inputField'>
+        <br>
+        <br>
+        <input type='submit' ng-click='createLeague()'>
+      </form>
+    </md-card-content>
+  </md-card>
+  <!-- <i class="fa fa-plus"></i> -->
+</md-content>

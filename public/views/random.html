@@ -1,0 +1,28 @@
+$scope.getAllUsers = function() {
+      leaGoFactory.query().then(function(data){
+        $scope.users = data.data;
+        console.log($scope.users);
+      });
+      
+    };
+
+    $scope.deleteFile = function(data){
+      $http.delete('/users/'+ data._id);
+      $scope.getAllUsers();
+    }
+
+
+    
+
+      query: function() {
+        return $http.get('/users').success(function(data) {
+          console.log(data);
+        }).
+        error(function(error) {
+          console.log(error);
+        });
+      },
+
+      deleteUser: function(data) {
+        return $http.delete('/users' + data._id);
+      }
