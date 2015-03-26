@@ -7,7 +7,9 @@ module.exports.allTeams = function(req, res) {
     if(err) {
       res.send(err);
     }
-    res.json(teams);
+    else {
+      res.json(teams);   
+    }
   });
   //res.json(req.league.teams)
 };
@@ -45,7 +47,7 @@ module.exports.createTeam = function(req, res) {
 };
 
 module.exports.findOne = function(req, res, next) {
-  Team.findById(req.params.teamId).populate('players').exec(function(err, team) {
+  Team.findById(req.params.teamId).populate('players', '_id, fullName').exec(function(err, team) {
     if(err) {
       res.send(err);
     }

@@ -9,14 +9,46 @@ body a {
 .container {
   padding: 30px;
 }
+#updateLeague, #updateTeam {
+  float: right;
+}
 #createLeague {
   margin-top: 60px;
-  height: 250px;
+  height: 300px;
 }
 #createLeagueBar {
   width: 100%;
   background-color: rgb(255,64,129);
 }
+#createTeam {
+  height: 250px;
+}
 .inputField {
   width: 90%;
+}
+#profileImg {
+  height: 200px;
+  width: 200px;
+  padding-top: 10px;
+}
+#displayCard {
+  width: 400px;
+  height: 400px;
+  margin-top: -15px;
+}
+#resultDisplay {
+  overflow: scroll;
+  height: 400px;
+}
+.playerUpdate :hover{
+  color: black;
+}
+.playerUpdate :visited {
+  color: blue;
+}
+#update {
+  float: right;
+}
+#updateSection {
+  margin-left: 30px;
 }

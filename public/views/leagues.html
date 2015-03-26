@@ -9,6 +9,10 @@
           <br>
           <small>{{league.durationOfTournament}}</small>
         </a>
+        <div id='updateLeague'>
+          <img src="../img/delete.png" ng-click='removeLeague(league._id)'>  
+          <!-- <i class="fa fa-plus" ng-click='updateLeague(league._id)'></i> -->
+        </div>
       </md-card-content>
     </md-card>
   </div>
@@ -20,15 +24,16 @@
     </md-toolbar>
     <md-card-content>
       <form id='inputField'>
-        <input type="text" placeholder='Enter Name of Tournamemnt' ng-model='league.name' class='inputField'>
-        <br>
-        <br>
-        <input type="text" placeholder='Enter the duration of the Tournament' ng-model='league.durationOfTournament' class='inputField'>
-        <br>
-        <br>
-        <input type='submit' ng-click='createLeague()'>
+        <md-input-container>
+          <label>Enter League Name</label>
+          <input ng-model='league.name' class='inputField'>
+        </md-input-container>
+        <md-input-container>
+          <label>Duration of Tournament</label>
+          <input ng-model='league.durationOfTournament' class='inputField'>
+        </md-input-container>
+        <md-button type='submit' class="md-raised" ng-click='createLeague()'>Create League</md-button>
       </form>
     </md-card-content>
   </md-card>
-  <!-- <i class="fa fa-plus"></i> -->
 </md-content>

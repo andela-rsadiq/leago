@@ -1,5 +1,5 @@
 angular.module('leaGo')
-  .factory('leaGoFactory',['$http', '$routeParams', function($http, $routeParams) {
+  .factory('leaGoFactory',['$http', function($http) {
     return {
       queryLeague: function(load) {
         return $http.get('/leagues').success(function(data) {
@@ -9,11 +9,33 @@ angular.module('leaGo')
         });
       },
 
-      findOneLeague: function(data) {
-        return $http.get('/leagues/' + $routeParams.leagueId);
-      },
       createLeague: function(data) {
         return $http.post('/leagues', data);
+      },
+
+      deleteLeague: function(leagueId) {
+        return $http.delete('/leagues/' + leagueId);
+      },
+
+      createTeam: function(leagueId, data) {
+        console.log(data);
+        return $http.post('/leagues/' + leagueId + '/teams', data);
+      },
+
+      deleteTeam: function(leagueId, teamId) {
+        return $http.delete('/leagues/' + leagueId + '/teams/' + teamId);
+      },
+
+      findTeamsInOneLeague: function(leagueId) {
+        return $http.get('/leagues/' + leagueId);
+      },
+
+      findPlayersInOneTeam: function(leagueId, teamId) {
+        return $http.get('/leagues/' + leagueId + '/teams/' + teamId + '/players');
+      },
+
+      displayPlayer: function(leagueId, teamId, playerId) {
+        return $http.get('/leagues/' + leagueId + '/teams/' + teamId + '/players/' + playerId);
       }
     };
   }]);

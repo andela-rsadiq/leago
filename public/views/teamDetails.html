@@ -1,0 +1,40 @@
+<section layout='row' flex id=updateSection>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Team Details</h1>
+    </md-toolbar>
+    <md-content class="md-padding" id='resultDisplay'>
+        <md-card ng-repeat="player in players">
+            <md-card-content ng-click='viewPlayer(player._id)'>
+                {{player.fullName}}
+            </md-card-content>
+        </md-card>
+    </md-content>
+</md-sidenav>
+<md-content flex class="md-padding">
+    <div layout="column" layout-fill layout-align="top center">
+      <md-card id='displayCard'>
+        <img src='../img/profilePhoto.jpg' id='profileImg'>
+        <md-card-content>
+          Name: {{result.fullName}}
+          <br>
+          <br>
+          Jersey Number: {{result.jerseyNumber}}
+          <br>
+          <br>
+          Yellow Cards: {{result.yellowCardsObtained}}
+          <br>
+          <br>
+          Red Cards: {{result.redCardsObtained}}
+          <br>
+          <br>
+          <div id='update'>
+            <a href="" class='playerUpdate'>Update Details</a> 
+            <a href="" class='playerUpdate'>Delete</a>
+          </div>
+        </md-card-content>
+      </md-card>
+      </div>
+    <div flex></div>
+  </md-content>
+</section>

@@ -28,7 +28,7 @@ module.exports.createLeague = function(req, res) {
 };
 
 module.exports.findOneLeague = function(req, res, next) {
-  League.findById(req.params.leagueId).populate('teams', 'events').exec(function(err, league) {
+  League.findById(req.params.leagueId).populate('teams', '_id, name').populate('games', '_id').exec(function(err, league) {
     if(err) {
       res.send(err);
     }

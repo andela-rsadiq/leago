@@ -1,9 +1,31 @@
 <md-content layout='row'>
   <div id='listOfTeamDiv' flex='66'>
-    <md-card ng-repeat='team in displayOneLeague'>
+    <md-card ng-repeat='team in teams'>
       <md-card-content>
-        {{team.name}}
+        <a href="#/leagues/{{league._id}}/teams/{{team._id}}/players">
+          {{team.name}}
+        </a>
+        <div id='updateTeam'>
+          <img src="../img/delete.png" ng-click='removeTeam(team._id)'>  
+          <!-- <i class="fa fa-plus"></i>  -->
+        </div>
       </md-card-content>
     </md-card>
   </div>
+  <md-card flex id='createTeam'>
+    <md-toolbar id='createTeamBar'>
+      <h2 class="md-toolbar-tools">
+        <span>Add Teams to League</span>
+      </h2>
+    </md-toolbar>
+    <md-card-content>
+      <form id='inputField'>
+        <md-input-container>
+          <label>Team Name</label>
+          <input ng-model='team.name' class='inputField'>
+        </md-input-container>
+        <md-button type='submit' class="md-raised" ng-click='createTeam()'>Add Team</md-button>
+      </form>
+    </md-card-content>
+  </md-card>
 </md-content>

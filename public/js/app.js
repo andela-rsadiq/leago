@@ -16,6 +16,10 @@ var leaGo = angular.module('leaGo', [
         templateUrl: '../views/Games.html',
         controller: 'leagueCtrl'
       }).
+      when('/leagues/:leagueId/teams/:teamId/players', {
+        templateUrl: '../views/teamDetails.html',
+        controller: 'leagueCtrl'
+      }).
       otherwise({
         redirectTo: '/home'
       });
