@@ -1,4 +1,9 @@
 <md-content layout='row'>
+  <div ng-show= 'alertMessage'>
+    <p>
+      {{alertMessage}}
+    </p>
+  </div>
   <div id='listOfTeamDiv' flex='66'>
     <md-card ng-repeat='team in teams'>
       <md-card-content>

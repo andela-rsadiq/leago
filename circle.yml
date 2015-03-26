@@ -1,0 +1,14 @@
+dependencies:
+ pre:
+  - bower install
+ post:
+  - npm install
+test:
+  override:
+deployment:
+  production:
+    branch: master
+    heroku: 
+      appname: leago
+  staging:
+    branch: develop
