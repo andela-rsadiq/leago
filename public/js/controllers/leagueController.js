@@ -1,20 +1,24 @@
 angular.module('leaGo')
   .controller('leagueCtrl', ['$scope', '$http', 'leaGoFactory', '$routeParams', function($scope, $http, leaGoFactory, $routeParams) {
-    
+    $scope.league = {};
     var display = function() {
       leaGoFactory.queryLeague(function(data) {
         $scope.leagues = data;
       });
-      $scope.league = {};
+      /*//$scope.league = {};
+      $scope.league.durationOfTournament = '';
+      $scope.league.name = '';*/
     };
 
     var displayTeam = function() {
       if($routeParams.leagueId) {
         leaGoFactory.findTeamsInOneLeague($routeParams.leagueId).then(function(data) {
+          console.log(data.data.teams.length);
           if(data.data.teams.length === 0) {
-            var alertMessage = 'There are no teams in this league yet. Please add teams using the add team form.';
+            $scope.alertMessage = 'There are no teams in this league yet. Please add teams using the add team form.';
           }
           else {
+            //$scope.alertMessage = false;
             alertMessage = null;
             $scope.teams = data.data.teams;
             $scope.league = data.data;
@@ -25,19 +29,50 @@ angular.module('leaGo')
     };
     
     $scope.createLeague = function() {
-      console.log($scope.league);
-      if($scope.league.name === '' && $scope.league.durationOfTournament === '') {
-        alert('Please enter all league details');
-      }
-      else {
+      console.log('fsfsfd');
+
+      if ($scope.leagueForm.$valid) {
         leaGoFactory.createLeague($scope.league).then(function(data) {
           alert('New Tournament has been created!');
         }, function(error){
           alert("Sorry, an error has occurred, league was not created!");
         });
+        $scope.reset();
         display();
+      } else {
+        alert("There are invalid fields");
       }
+      // console.log($scope.league);
+      // if($scope.league.name === '' && $scope.league.durationOfTournament === '') {
+      //   alert('Please enter all league details');
+      // }
+      // else {
+      //   leaGoFactory.createLeague($scope.league).then(function(data) {
+      //     alert('New Tournament has been created!');
+      //   }, function(error){
+      //     alert("Sorry, an error has occurred, league was not created!");
+      //   });
+      //  display();
+      // }
     };
+
+    $scope.reset = function() {
+      $scope.league = { name: '', durationOfTournament: '' };
+    }
+
+    $scope.edit = function(leagueId) {
+      $scope.editLeagueDiv = true;
+      $scope.editLeague = function() {
+        $scope.editLeagueDiv = false;
+        leaGoFactory.updateLeague(leagueId, $scope.league).success(function(data) {
+          alert('League deatils have been updated.')
+          display();
+        }).error(function(data) {
+          alert('An error has occurred!');
+        });
+      }
+    }
+
 
     $scope.removeLeague = function(leagueId) {
       var checkAction = confirm('Are you sure you want to delete team?');

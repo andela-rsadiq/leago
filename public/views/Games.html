@@ -1,8 +1,8 @@
 <md-content layout='row'>
   <div ng-show= 'alertMessage'>
-    <p>
-      {{alertMessage}}
-    </p>
+    <h1>
+      <strong>{{alertMessage}}</strong>
+    </h1>
   </div>
   <div id='listOfTeamDiv' flex='66'>
     <md-card ng-repeat='team in teams'>
@@ -12,7 +12,7 @@
         </a>
         <div id='updateTeam'>
           <img src="../img/delete.png" ng-click='removeTeam(team._id)'>  
-          <!-- <i class="fa fa-plus"></i>  -->
+          <img src='../img/edit.png' ng-click='editTeam(team_id)'>
         </div>
       </md-card-content>
     </md-card>
@@ -24,12 +24,15 @@
       </h2>
     </md-toolbar>
     <md-card-content>
-      <form id='inputField'>
+      <form id='inputField' name='teamForm' novalidate>
         <md-input-container>
           <label>Team Name</label>
-          <input ng-model='team.name' class='inputField'>
+          <input ng-model='team.name' class='inputField' name='teamName' required>
+          <span style="color:red" ng-show="teamForm.teamName.$dirty && teamForm.teamName.$invalid">
+          <span ng-show="teamForm.teamName.$error.required">Team Name is required.</span>
+          </span>
         </md-input-container>
-        <md-button type='submit' class="md-raised" ng-click='createTeam()'>Add Team</md-button>
+        <md-button type='submit' class="md-raised" ng-click='createTeam()' ng-disabled="teamForm.$invalid">Add Team</md-button>
       </form>
     </md-card-content>
   </md-card>

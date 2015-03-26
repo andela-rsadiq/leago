@@ -13,6 +13,12 @@ angular.module('leaGo')
         return $http.post('/leagues', data);
       },
 
+      updateLeague: function(leagueId, data) {
+        console.log(data);
+        console.log(leagueId);
+        return $http.put('/leagues/' + leagueId, data);
+      },
+
       deleteLeague: function(leagueId) {
         return $http.delete('/leagues/' + leagueId);
       },

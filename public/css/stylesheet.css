@@ -12,11 +12,11 @@ body a {
 #updateLeague, #updateTeam {
   float: right;
 }
-#createLeague {
+#league {
   margin-top: 60px;
   height: 300px;
 }
-#createLeagueBar {
+#leagueBar {
   width: 100%;
   background-color: rgb(255,64,129);
 }
@@ -52,3 +52,12 @@ body a {
 #updateSection {
   margin-left: 30px;
 }
+/*#editLeagueDiv {
+  position: absolute;
+  z-index: 20;
+  top: 150px;
+  left: 16%;
+  width: 800px;
+  border: 1px solid rgba(0,0,0,0.5);
+  background: white;
+}*/

@@ -4,36 +4,65 @@
     <md-card ng-repeat='league in leagues'>
 
       <md-card-content>
-        <a href='#/leagues/{{league._id}}'>
           <strong>{{league.name}}</strong>
           <br>
           <small>{{league.durationOfTournament}}</small>
-        </a>
+          <br>
+          <a href='#/leagues/{{league._id}}'><small>Click here to view Tournament details</small></a>
         <div id='updateLeague'>
           <img src="../img/delete.png" ng-click='removeLeague(league._id)'>  
-          <!-- <i class="fa fa-plus" ng-click='updateLeague(league._id)'></i> -->
+          <img src='../img/edit.png' ng-click='edit(league._id)'>
         </div>
       </md-card-content>
     </md-card>
   </div>
-  <md-card flex id='createLeague'>
-    <md-toolbar id='createLeagueBar'>
-      <h2 class="md-toolbar-tools">
-        <span>Create New League</span>
-      </h2>
-    </md-toolbar>
-    <md-card-content>
-      <form id='inputField'>
-        <md-input-container>
-          <label>Enter League Name</label>
-          <input ng-model='league.name' class='inputField'>
-        </md-input-container>
-        <md-input-container>
-          <label>Duration of Tournament</label>
-          <input ng-model='league.durationOfTournament' class='inputField'>
-        </md-input-container>
-        <md-button type='submit' class="md-raised" ng-click='createLeague()'>Create League</md-button>
-      </form>
-    </md-card-content>
-  </md-card>
+  
+  <div flex layout='column'>
+    <md-card id='league'>
+      <md-toolbar id='leagueBar'>
+        <h2 class="md-toolbar-tools">
+          <span>Create New League</span>
+        </h2>
+      </md-toolbar>
+      <md-card-content>
+        <form id='inputField' name='leagueForm' novalidate>
+          <md-input-container ng-class="{ 'has-error': leagueForm.leagueName.$invalid }">
+            <label>Enter League Name</label>
+            <input ng-model='league.name' class='inputField' name='leagueName' required>
+            <!-- <span style="color:red" ng-show="leagueForm.leagueName.$dirty && leagueForm.leagueName.$invalid">Enter league Name</span> -->
+            <!-- <span ng-show="leagueForm.leagueName.$error.required">league Name is required.</span> -->
+          </md-input-container>
+          <md-input-container ng-class="{ 'has-error': leagueForm.leagueDuration.$invalid }">
+            <label>Duration of Tournament</label>
+            <input ng-model='league.durationOfTournament' class='inputField' name='leagueDuration' required>
+            <!-- <span style="color:red" ng-show="leagueForm.leagueDuration.$dirty && leagueForm.leagueDuration.$invalid">Enter duration</span> -->
+            <!-- <span ng-show="leagueForm.leagueDuration.$error.required">league Duration is required.</span> -->
+          </md-input-container>
+          <md-button type='submit' class="md-raised" ng-click='createLeague()' ng-disabled="leagueForm.$invalid">Create League</md-button>
+          <md-button ng-click='reset()' class="md-raised">Reset</md-button>
+        </form>
+      </md-card-content>
+    </md-card>
+
+    <md-card id='league' ng-show='editLeagueDiv'>
+      <md-toolbar id='leagueBar'>
+        <h2 class="md-toolbar-tools">
+          <span>Edit League</span>
+        </h2>
+      </md-toolbar>
+      <md-card-content>
+        <form name='editLeagueForm'>
+          <md-input-container>
+            <label>Enter New League Name</label>
+            <input ng-model='league.name' class='inputField' name='leagueName'>
+          </md-input-container>
+          <md-input-container>
+            <label>Duration of Tournament</label>
+            <input ng-model='league.durationOfTournament' class='inputField' name='leagueDuration'>
+          </md-input-container>
+          <md-button type='submit' class="md-raised" ng-click='editLeague()'>Update League</md-button>
+        </form>
+      </md-card-content>
+    </md-card>
+  </div>
 </md-content>
