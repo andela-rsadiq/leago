@@ -10,5 +10,3 @@ deployment:
     branch: master
     heroku: 
       appname: leago
-  staging:
-    branch: develop
