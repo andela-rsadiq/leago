@@ -12,6 +12,9 @@
     "league",
     "leader"
   ],
+  "engines": {
+    "node": "0.10.x"
+  },
   "author": "Rukayat Sadiq",
   "license": "ISC",
   "dependencies": {
