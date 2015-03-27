@@ -9,8 +9,8 @@
   </head>
   <body>
     <md-tabs class="md-accent" md-selected="data.selectedIndex">
-      <md-tab id="tab1" aria-controls="tab1-content">
-        LeaGo
+      <md-tab id="tab1" aria-controls="tab1-content" style='color: white'>
+        <a href='#/home'>LeaGo</a>
       </md-tab>
       <md-tab id="tab2" aria-controls="tab2-content" ng-disabled="data.secondLocked">
         <a href='#/home'>HOME</a>
@@ -19,9 +19,7 @@
         <a href='#/leagues'>LEAGUES</a>
       </md-tab>
     </md-tabs>
-   <!--  <header>
-      <img src='img/pitch.jpg' id='headerImg'>
-    </header> -->
+   <!--  -->
 
     <md-content class='container' ng-view>
 

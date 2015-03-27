@@ -32,6 +32,14 @@ angular.module('leaGo')
         return $http.post('/leagues/' + leagueId + '/teams', data);
       },
 
+      getOneTeam: function(leagueId, teamId) {
+        return $http.get('/leagues/' + leagueId + '/teams/' + teamId);
+      },
+
+      updateTeam: function(leagueId, teamId, data) {
+        return $http.put('/leagues/' + leagueId + '/teams' + teamId, data);
+      },
+
       deleteTeam: function(leagueId, teamId) {
         return $http.delete('/leagues/' + leagueId + '/teams/' + teamId);
       },
@@ -42,6 +50,10 @@ angular.module('leaGo')
 
       findPlayersInOneTeam: function(leagueId, teamId) {
         return $http.get('/leagues/' + leagueId + '/teams/' + teamId + '/players');
+      },
+
+      addPlayertoTeam: function(leagueId, teamId, data) {
+        return $http.post('/leagues/' + leagueId + '/teams/' + teamId, data);
       },
 
       displayPlayer: function(leagueId, teamId, playerId) {

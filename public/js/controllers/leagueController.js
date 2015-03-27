@@ -14,7 +14,6 @@ angular.module('leaGo')
     var displayTeam = function() {
       if($routeParams.leagueId) {
         leaGoFactory.findTeamsInOneLeague($routeParams.leagueId).then(function(data) {
-          console.log(data.data.teams.length);
           if(data.data.teams.length === 0) {
             $scope.alertMessage = 'There are no teams in this league yet. Please add teams using the add team form.';
           }
@@ -27,6 +26,12 @@ angular.module('leaGo')
           }
         });
       }
+    };
+
+    var displayPlayer = function() {
+      leaGoFactory.findPlayersInOneTeam($routeParams.leagueId, $routeParams.teamId).success(function(data) {
+        $scope.players = data;
+      });
     };
     
     $scope.createLeague = function() {
@@ -67,13 +72,45 @@ angular.module('leaGo')
       $scope.editLeague = function() {
         $scope.editLeagueDiv = false;
         leaGoFactory.updateLeague(leagueId, $scope.updateLeague).success(function(data) {
-          alert('League deatils have been updated.')
+          alert('League deatils have been updated.');
           $scope.updateLeague = {};
           display();
         }).error(function(data) {
           alert('An error has occurred!');
         });
       }
+    };
+
+    $scope.editTeamInit = function(teamId) {
+      $scope.editTeamDiv = true;
+      $scope.getTeam(teamId);
+      $scope.editTeam = function() {
+        $scope.editTeamDiv = false;
+        leaGoFactory.updateTeam($routeParams.leagueId, teamId, $scope.updateTeam).success(function(data) {
+          alert('Team details have been updated.');
+          $scope.updateTeam = {};
+          displayTeam();
+        }).error(function(data) {
+          alert('An error has occurred.')
+        });
+      }
+    };
+
+    $scope.addPlayerInit = function() {
+      $scope.addPlayerDiv = true;
+    };
+
+    $scope.hidePlayerForm = function() {
+      $scope.addPlayerDiv = false;
+    }
+
+    $scope.addPlayer = function() {
+      leaGoFactory.addPlayertoTeam($routeParams.leagueId, $routeParams.teamId, $scope.player).success(function(data) {
+        console.log(data);
+        displayPlayer();
+      }).error(function(error) {
+        alert('An error has occurred, player was not created, please try again.');
+      });
     };
 
     $scope.getLeague = function(leagueId){
@@ -85,6 +122,14 @@ angular.module('leaGo')
       });
     };
 
+    $scope.getTeam = function(teamId) {
+      leaGoFactory.getOneTeam($routeParams.leagueId, teamId).success(function(data) {
+        $scope.updateTeam = data;
+        console.log(data);
+      }).error(function(data) {
+        //do something
+      });
+    };
 
     $scope.removeLeague = function(leagueId) {
       var checkAction = confirm('Are you sure you want to delete team?');
