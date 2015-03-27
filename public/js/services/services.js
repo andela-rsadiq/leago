@@ -13,6 +13,10 @@ angular.module('leaGo')
         return $http.post('/leagues', data);
       },
 
+      getOneLeague: function(leagueId) {
+        return $http.get('/leagues/' + leagueId);
+      },
+
       updateLeague: function(leagueId, data) {
         console.log(data);
         console.log(leagueId);

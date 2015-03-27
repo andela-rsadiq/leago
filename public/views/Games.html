@@ -1,9 +1,9 @@
 <md-content layout='row'>
-  <div ng-show= 'alertMessage'>
+  <!-- <div ng-show= 'alertMessage'layout='row'>
     <h1>
       <strong>{{alertMessage}}</strong>
     </h1>
-  </div>
+  </div> -->
   <div id='listOfTeamDiv' flex='66'>
     <md-card ng-repeat='team in teams'>
       <md-card-content>
@@ -17,23 +17,63 @@
       </md-card-content>
     </md-card>
   </div>
-  <md-card flex id='createTeam'>
-    <md-toolbar id='createTeamBar'>
-      <h2 class="md-toolbar-tools">
-        <span>Add Teams to League</span>
-      </h2>
-    </md-toolbar>
-    <md-card-content>
-      <form id='inputField' name='teamForm' novalidate>
-        <md-input-container>
-          <label>Team Name</label>
-          <input ng-model='team.name' class='inputField' name='teamName' required>
-          <span style="color:red" ng-show="teamForm.teamName.$dirty && teamForm.teamName.$invalid">
-          <span ng-show="teamForm.teamName.$error.required">Team Name is required.</span>
-          </span>
-        </md-input-container>
-        <md-button type='submit' class="md-raised" ng-click='createTeam()' ng-disabled="teamForm.$invalid">Add Team</md-button>
-      </form>
-    </md-card-content>
-  </md-card>
+  <div flex layout='column'>
+    <!-- Create Team for a particular Team -->
+    <md-card id='createTeam'>
+      <md-toolbar id='createTeamBar'>
+        <h2 class="md-toolbar-tools">
+          <span>Add Teams to League</span>
+        </h2>
+      </md-toolbar>
+      <md-card-content>
+        <form id='inputField' name='teamForm' novalidate>
+          <!-- <md-input-container>
+            <label>Team Name</label>
+            <input ng-model='team.name' class='inputField' name='teamName' required>
+            <span style="color:red" ng-show="teamForm.teamName.$dirty && teamForm.teamName.$invalid">
+            <span ng-show="teamForm.teamName.$error.required">Team Name is required.</span>
+            </span>
+          </md-input-container> -->
+          <md-input-container>
+            <label>Team Name</label>
+            <input required name="teamName" ng-model="team.name" class='inputField'>
+            <div ng-messages="teamForm.teamName.$error">
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+          <md-button type='submit' class="md-raised" ng-click='addTeam()' ng-disabled="teamForm.$invalid">Add Team</md-button>
+        </form>
+      </md-card-content>
+    </md-card>
+
+    <!-- Update Team section -->
+    <md-card id='team' ng-show='editTeamDiv'>
+      <md-toolbar id='teamBar'>
+        <h2 class="md-toolbar-tools">
+          <span>Edit League</span>
+        </h2>
+      </md-toolbar>
+      <md-card-content>
+        <form name='editTeamForm'>
+          <md-input-container>
+            <label>Enter New League Name</label>
+            <input ng-model='team.name' class='inputField' name='teamName'>
+          </md-input-container>
+          <md-input-container>
+            <label>Number of Games Played</label>
+            <input ng-model='league.numberOfGamesPlayed' class='inputField' name='leagueDuration'>
+          </md-input-container>
+          <md-input-container>
+            <label>Number of Goals Scored</label>
+            <input ng-model='league.numberOfGoalsScored' class='inputField' name='leagueDuration'>
+          </md-input-container>
+          <md-input-container>
+            <label>Number of Goals Conceded</label>
+            <input ng-model='league.numberOfGoalsConceded' class='inputField' name='leagueDuration'>
+          </md-input-container>
+          <md-button type='submit' class="md-raised" ng-click='editLeague()'>Update League</md-button>
+        </form>
+      </md-card-content>
+    </md-card>
+  </div>
 </md-content>

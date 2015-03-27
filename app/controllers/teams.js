@@ -83,7 +83,7 @@ module.exports.deleteTeam = function(req, res) {
       res.send(err);
     }
     else {
-      res.json({message: "Team has been deleted!"});
+      res.json(team);
     }
   });
 };

@@ -1,5 +1,6 @@
 angular.module('leaGo')
   .controller('leagueCtrl', ['$scope', '$http', 'leaGoFactory', '$routeParams', function($scope, $http, leaGoFactory, $routeParams) {
+    $scope.teams = [];
     $scope.league = {};
     var display = function() {
       leaGoFactory.queryLeague(function(data) {
@@ -62,16 +63,27 @@ angular.module('leaGo')
 
     $scope.edit = function(leagueId) {
       $scope.editLeagueDiv = true;
+      $scope.getLeague(leagueId);
       $scope.editLeague = function() {
         $scope.editLeagueDiv = false;
-        leaGoFactory.updateLeague(leagueId, $scope.league).success(function(data) {
+        leaGoFactory.updateLeague(leagueId, $scope.updateLeague).success(function(data) {
           alert('League deatils have been updated.')
+          $scope.updateLeague = {};
           display();
         }).error(function(data) {
           alert('An error has occurred!');
         });
       }
-    }
+    };
+
+    $scope.getLeague = function(leagueId){
+      leaGoFactory.getOneLeague(leagueId).success(function(data) {
+        console.log(data);
+        $scope.updateLeague = data;
+      }).error(function(data) {
+        //do something
+      });
+    };
 
 
     $scope.removeLeague = function(leagueId) {
@@ -86,21 +98,24 @@ angular.module('leaGo')
       display();
     };
 
-    $scope.createTeam = function() {
+    $scope.addTeam = function() {
       leaGoFactory.createTeam($routeParams.leagueId, $scope.team).then(function(data) {
         alert('New Team has been added to league');
-        console.log(data);
+        // console.log(data);
+        $scope.teams.push(data.data);
+        
       }, function(error){
         alert("Sorry, an error has occurred, team was not created!");
       });
-      displayTeam();
-      $scope.team = {};
+      // displayTeam();
     },
 
     $scope.removeTeam = function(teamId) {
       var checkAction = confirm('Are you sure you want to delete team?');
       if(checkAction) {
         leaGoFactory.deleteTeam($routeParams.leagueId, teamId). success(function(data) {
+          console.log(data);
+          // _.remove($scope.teams, function(){})
           alert('Team has been deleted');
         }).error(function(error) {
           alert('Ooops, an error has occurred, please try again.')

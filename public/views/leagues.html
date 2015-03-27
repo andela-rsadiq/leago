@@ -54,11 +54,11 @@
         <form name='editLeagueForm'>
           <md-input-container>
             <label>Enter New League Name</label>
-            <input ng-model='league.name' class='inputField' name='leagueName'>
+            <input ng-model='updateLeague.name' class='inputField' name='leagueName'>
           </md-input-container>
           <md-input-container>
             <label>Duration of Tournament</label>
-            <input ng-model='league.durationOfTournament' class='inputField' name='leagueDuration'>
+            <input ng-model='updateLeague.durationOfTournament' class='inputField' name='leagueDuration'>
           </md-input-container>
           <md-button type='submit' class="md-raised" ng-click='editLeague()'>Update League</md-button>
         </form>

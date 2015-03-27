@@ -17,7 +17,6 @@
   "dependencies": {
     "body-parser": "~1.4.2",
     "cors": "^2.5.3",
-    "crypto": "0.0.3",
     "express": "~4.5.1",
     "lodash": "^3.5.0",
     "method-override": "~2.0.2",

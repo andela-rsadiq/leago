@@ -1,6 +1,7 @@
 var leaGo = angular.module('leaGo', [
   'ngRoute', 
   'ngMaterial'
+  // 'lodash'
   ])
   .config(['$routeProvider',
     function($routeProvider) {
