@@ -53,7 +53,7 @@ angular.module('leaGo')
       },
 
       addPlayertoTeam: function(leagueId, teamId, data) {
-        return $http.post('/leagues/' + leagueId + '/teams/' + teamId, data);
+        return $http.post('/leagues/' + leagueId + '/teams/' + teamId + '/players', data);
       },
 
       displayPlayer: function(leagueId, teamId, playerId) {

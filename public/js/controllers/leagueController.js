@@ -6,9 +6,6 @@ angular.module('leaGo')
       leaGoFactory.queryLeague(function(data) {
         $scope.leagues = data;
       });
-      /*//$scope.league = {};
-      $scope.league.durationOfTournament = '';
-      $scope.league.name = '';*/
     };
 
     var displayTeam = function() {
@@ -64,6 +61,7 @@ angular.module('leaGo')
 
     $scope.reset = function() {
       $scope.league = { name: '', durationOfTournament: '' };
+      $scope.team = {name: ''};
     }
 
     $scope.edit = function(leagueId) {
@@ -102,6 +100,10 @@ angular.module('leaGo')
 
     $scope.hidePlayerForm = function() {
       $scope.addPlayerDiv = false;
+    };
+
+    $scope.hideEditLeague = function() {
+      $scope.editTeamDiv = false;
     }
 
     $scope.addPlayer = function() {
