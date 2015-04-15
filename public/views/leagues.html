@@ -8,10 +8,10 @@
           <br>
           <small>{{league.durationOfTournament}}</small>
           <br>
-          <a href='#/leagues/{{league._id}}'><small>Click here to view Tournament details</small></a>
+          <a ui-sref='leagues/id({leagueId: league._id})'><small>Click here to view Tournament details</small></a>
         <div id='updateLeague'>
-          <img src="../img/delete.png" ng-click='removeLeague(league._id)'>  
-          <img src='../img/edit.png' ng-click='edit(league._id)'>
+          <img src="../img/delete.png" ng-click='removeLeague($event, league._id)'>  
+          <img src='../img/edit.png' ng-click='edit($event, league._id)'>
         </div>
       </md-card-content>
     </md-card>
@@ -38,13 +38,13 @@
             <!-- <span style="color:red" ng-show="leagueForm.leagueDuration.$dirty && leagueForm.leagueDuration.$invalid">Enter duration</span> -->
             <!-- <span ng-show="leagueForm.leagueDuration.$error.required">league Duration is required.</span> -->
           </md-input-container>
-          <md-button type='submit' class="md-raised" ng-click='createLeague()' ng-disabled="leagueForm.$invalid">Create League</md-button>
+          <md-button type='submit' class="md-raised" ng-click='createLeague($event)' ng-disabled="leagueForm.$invalid">Create League</md-button>
           <md-button ng-click='reset()' class="md-raised">Reset</md-button>
         </form>
       </md-card-content>
     </md-card>
 
-    <md-card id='league' ng-show='editLeagueDiv'>
+    <!-- <md-card id='league' ng-show='editLeagueDiv'>
       <md-toolbar id='leagueBar'>
         <h2 class="md-toolbar-tools">
           <span>Edit League</span>
@@ -64,6 +64,6 @@
           <md-button type='submit' class="md-raised" ng-click='hideEditLeague()'>Hide</md-button>
         </form>
       </md-card-content>
-    </md-card>
+    </md-card> -->
   </div>
 </md-content>

@@ -49,6 +49,9 @@ require('./app/routes/teamRoute')(app);
 require('./app/routes/gamesRoute')(app);
 require('./app/routes/leagueRoute')(app);
 
+app.get('*', function(req, res) {
+    res.sendfile('./public/index.html'); // load our public/index.html file
+});
 // start app ===============================================
 // startup our app at http://localhost:8080
 app.listen(port);               

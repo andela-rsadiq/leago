@@ -1,6 +1,7 @@
 angular.module('leaGo')
-  .controller('leagueCtrl', ['$scope', '$http', 'leaGoFactory', '$routeParams', function($scope, $http, leaGoFactory, $routeParams) {
-    $scope.teams = [];
+  .controller('leagueCtrl', ['$scope', '$http', 'leaGoFactory', '$stateParams', '$mdDialog', function($scope, $http, leaGoFactory, $stateParams, $mdDialog) {
+    $scope.teams = {};
+    $scope.alert = '';
     $scope.league = {};
     var display = function() {
       leaGoFactory.queryLeague(function(data) {
@@ -9,74 +10,145 @@ angular.module('leaGo')
     };
 
     var displayTeam = function() {
-      if($routeParams.leagueId) {
-        leaGoFactory.findTeamsInOneLeague($routeParams.leagueId).then(function(data) {
+      if($stateParams.leagueId) {
+        
+        leaGoFactory.findTeamsInOneLeague($stateParams.leagueId).then(function(data) {
           if(data.data.teams.length === 0) {
-            $scope.alertMessage = 'There are no teams in this league yet. Please add teams using the add team form.';
+            console.log(data.data.teams.length);
+            $scope.emptyDivAlert = true;
+            $scope.showCreateTeamForm = function() {
+              $scope.createTeamForm = true;
+            };
           }
           else {
-            //$scope.alertMessage = false;
+            $scope.emptyDivAlert = false;
+            $scope.createTeamForm = true;
             alertMessage = null;
             $scope.teams = data.data.teams;
             $scope.league = data.data;
-            console.log(data);
+            console.log(data.data.teams);
+            console.log(data.data.teams.length);
           }
         });
       }
     };
 
     var displayPlayer = function() {
-      leaGoFactory.findPlayersInOneTeam($routeParams.leagueId, $routeParams.teamId).success(function(data) {
+      leaGoFactory.findPlayersInOneTeam($stateParams.leagueId, $stateParams.teamId).success(function(data) {
         $scope.players = data;
       });
     };
     
-    $scope.createLeague = function() {
+    $scope.createLeague = function(ev) {
       console.log('fsfsfd');
 
       if ($scope.leagueForm.$valid) {
         leaGoFactory.createLeague($scope.league).then(function(data) {
-          alert('New Tournament has been created!');
+          $mdDialog.show(
+            $mdDialog.alert()
+            .title('Success!')
+            .content('New Tournament has been created!')
+            .ariaLabel('Create League Alert Dialog')
+            .ok('Got it!')
+            .targetEvent(ev)
+          );
         }, function(error){
-          alert("Sorry, an error has occurred, league was not created!");
+          $mdDialog.show(
+            $mdDialog.alert()
+            .title('This is an alert title')
+            .content('Sorry, an error has occurred, league was not created!')
+            .ariaLabel('Create League Alert Dialog')
+            .ok('Got it!')
+            .targetEvent(ev)
+          );
         });
         $scope.reset();
         display();
       } else {
         alert("There are invalid fields");
       }
-      // console.log($scope.league);
-      // if($scope.league.name === '' && $scope.league.durationOfTournament === '') {
-      //   alert('Please enter all league details');
-      // }
-      // else {
-      //   leaGoFactory.createLeague($scope.league).then(function(data) {
-      //     alert('New Tournament has been created!');
-      //   }, function(error){
-      //     alert("Sorry, an error has occurred, league was not created!");
-      //   });
-      //  display();
-      // }
     };
 
     $scope.reset = function() {
       $scope.league = { name: '', durationOfTournament: '' };
       $scope.team = {name: ''};
-    }
+    };
 
-    $scope.edit = function(leagueId) {
+    var getLeague = $scope.getLeague = function(leagueId){
+      leaGoFactory.getOneLeague(leagueId).success(function(data) {
+        console.log(data);
+        $scope.updateLeague = data;
+      }).error(function(data) {
+        //do something
+      });
+    };
+
+    /*$scope.edit = function(leagueId) {
       $scope.editLeagueDiv = true;
       $scope.getLeague(leagueId);
       $scope.editLeague = function() {
         $scope.editLeagueDiv = false;
         leaGoFactory.updateLeague(leagueId, $scope.updateLeague).success(function(data) {
-          alert('League deatils have been updated.');
+          alert('League details have been updated.');
           $scope.updateLeague = {};
           display();
         }).error(function(data) {
           alert('An error has occurred!');
         });
       }
+    };*/
+
+    $scope.edit = function(ev, leagueId) {
+      $mdDialog.show({
+        controller: ['$scope', '$mdDialog', function($scope, $mdDialog) {
+          $scope.editLeagueDiv = true;
+          getLeague(leagueId);
+          $scope.editLeague = function() {
+            $scope.editLeagueDiv = false;
+            leaGoFactory.updateLeague(leagueId, $scope.updateLeague).success(function(data) {
+              //alert('League details have been updated.');
+              $mdDialog.show(
+                $mdDialog.alert()
+                .title('This is an alert title')
+                .content('League details have been updated!')
+                .ariaLabel('Successful edit League Dialog.')
+                .ok('Got it!')
+                .targetEvent(ev)
+              );
+              $scope.updateLeague = {};
+              display();
+            }).error(function(data) {
+              $mdDialog.show(
+                $mdDialog.alert()
+                .title('This is an alert title')
+                .content('An error has occurred!')
+                .ariaLabel('Unsuccessful edit League Dialog.')
+                .ok('Got it!')
+                .targetEvent(ev)
+              );
+            });
+          };
+          $scope.hide = function() {
+            $mdDialog.hide();
+          };
+          /*$scope.cancel = function() {
+            $mdDialog.cancel();
+          };*/
+          $scope.hideEditLeague = function() {
+            $scope.editLeagueDiv = false;
+          };
+/*          $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+          };*/
+        }],
+        templateUrl: '../views/editLeagueTemplate.html',
+        targetEvent: ev,
+      })
+      .then(function(answer) {
+        $scope.alert = 'League details have been updated.';
+      }, function() {
+        $scope.alert = 'You cancelled the dialog.';
+      });
     };
 
     $scope.editTeamInit = function(teamId) {
@@ -84,12 +156,12 @@ angular.module('leaGo')
       $scope.getTeam(teamId);
       $scope.editTeam = function() {
         $scope.editTeamDiv = false;
-        leaGoFactory.updateTeam($routeParams.leagueId, teamId, $scope.updateTeam).success(function(data) {
+        leaGoFactory.updateTeam($stateParams.leagueId, teamId, $scope.updateTeam).success(function(data) {
           alert('Team details have been updated.');
           $scope.updateTeam = {};
           displayTeam();
         }).error(function(data) {
-          alert('An error has occurred.')
+          alert('An error has occurred.' + data);
         });
       }
     };
@@ -107,7 +179,7 @@ angular.module('leaGo')
     }
 
     $scope.addPlayer = function() {
-      leaGoFactory.addPlayertoTeam($routeParams.leagueId, $routeParams.teamId, $scope.player).success(function(data) {
+      leaGoFactory.addPlayertoTeam($stateParams.leagueId, $stateParams.teamId, $scope.player).success(function(data) {
         console.log(data);
         displayPlayer();
       }).error(function(error) {
@@ -115,17 +187,10 @@ angular.module('leaGo')
       });
     };
 
-    $scope.getLeague = function(leagueId){
-      leaGoFactory.getOneLeague(leagueId).success(function(data) {
-        console.log(data);
-        $scope.updateLeague = data;
-      }).error(function(data) {
-        //do something
-      });
-    };
+    
 
     $scope.getTeam = function(teamId) {
-      leaGoFactory.getOneTeam($routeParams.leagueId, teamId).success(function(data) {
+      leaGoFactory.getOneTeam($stateParams.leagueId, teamId).success(function(data) {
         $scope.updateTeam = data;
         console.log(data);
       }).error(function(data) {
@@ -133,36 +198,43 @@ angular.module('leaGo')
       });
     };
 
-    $scope.removeLeague = function(leagueId) {
-      var checkAction = confirm('Are you sure you want to delete team?');
-      if(checkAction) {
-        leaGoFactory.deleteLeague(leagueId).success(function(data) {
-          alert('League has been deleted!');
-        }).error(function(error) {
-          alert('Oops, something went wrong, please try deleting again.')
-        });
-      }
+    $scope.removeLeague = function(ev, leagueId) {
+      console.log(1, 'here');
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+      /*.parent(angular.element(document.body))*/
+      .title('Are you sure you want to delete league?')
+      .content('Details about this league would be not be accessible after deletion.')
+      .ariaLabel('Lucky day')
+      .ok('Please do it!')
+      .cancel('No, keep league details')
+      .targetEvent(ev);
+    $mdDialog.show(confirm).then(function() {
+      leaGoFactory.deleteLeague(leagueId);
+      $scope.alert = 'You decided to delete the league.';
       display();
-    };
+    }, function() {
+      $scope.alert = 'You decided to keep the league';
+    });
+    display();
+  };
 
     $scope.addTeam = function() {
-      leaGoFactory.createTeam($routeParams.leagueId, $scope.team).then(function(data) {
+      leaGoFactory.createTeam($stateParams.leagueId, $scope.team).then(function(data) {
         alert('New Team has been added to league');
-        // console.log(data);
         $scope.teams.push(data.data);
-        
       }, function(error){
         alert("Sorry, an error has occurred, team was not created!");
       });
-      // displayTeam();
+      $scope.emptyDivAlert = false;
+      $scope.team = {};
     },
 
     $scope.removeTeam = function(teamId) {
       var checkAction = confirm('Are you sure you want to delete team?');
       if(checkAction) {
-        leaGoFactory.deleteTeam($routeParams.leagueId, teamId). success(function(data) {
+        leaGoFactory.deleteTeam($stateParams.leagueId, teamId). success(function(data) {
           console.log(data);
-          // _.remove($scope.teams, function(){})
           alert('Team has been deleted');
         }).error(function(error) {
           alert('Ooops, an error has occurred, please try again.')
@@ -174,13 +246,13 @@ angular.module('leaGo')
     $scope.init = function() {
       display();
       displayTeam();
-      leaGoFactory.findPlayersInOneTeam($routeParams.leagueId, $routeParams.teamId).success(function(data) {
+      leaGoFactory.findPlayersInOneTeam($stateParams.leagueId, $stateParams.teamId).success(function(data) {
         $scope.players = data;
       });
     };
 
     $scope.viewPlayer = function(playerId) {
-      leaGoFactory.displayPlayer($routeParams.leagueId, $routeParams.teamId, playerId). success(function(data) {
+      leaGoFactory.displayPlayer($stateParams.leagueId, $stateParams.teamId, playerId). success(function(data) {
         console.log(data);
         $scope.result = data;
       }).error(function(error) {

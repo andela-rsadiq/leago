@@ -1,75 +1,80 @@
-<md-content layout='row'>
-  <!-- <div ng-show= 'alertMessage'layout='row'>
+<md-content layout='column'>
+  <strong>{{league.name}}</strong>
+  <div ng-show='emptyDivAlert' layout='row'>
     <h1>
-      <strong>{{alertMessage}}</strong>
+      There are no teams in this league yet. Click <a style="color: red" ng-click='showCreateTeamForm()'>here</a> to add teams.
     </h1>
-  </div> -->
-  <div id='listOfTeamDiv' flex='66'>
-    <md-card ng-repeat='team in teams'>
-      <md-card-content>
-        {{team.name}}
-        <br>
-        <a href="#/leagues/{{league._id}}/teams/{{team._id}}/players">
-          <small>Click here to view Team detais</small>
-        </a>
-        <div id='updateTeam'>
-          <img src="../img/delete.png" ng-click='removeTeam(team._id)'>  
-          <img src='../img/edit.png' ng-click='editTeamInit(team._id)'>
-        </div>
-      </md-card-content>
-    </md-card>
   </div>
-  <div flex layout='column'>
-    <!-- Create Team for a particular Team -->
-    <md-card id='createTeam'>
-      <md-toolbar id='createTeamBar'>
-        <h2 class="md-toolbar-tools">
-          <span>Add Teams to League</span>
-        </h2>
-      </md-toolbar>
-      <md-card-content>
-        <form id='inputField' name='teamForm' novalidate>
-          <md-input-container>
-            <label>Team Name</label>
-            <input required name="teamName" ng-model="team.name" class='inputField'>
-            <div ng-messages="teamForm.teamName.$error">
-              <div ng-message="required">This is required.</div>
-            </div>
-          </md-input-container>
-          <md-button type='submit' class="md-raised" ng-click='addTeam()' ng-disabled="teamForm.$invalid">Add Team</md-button>
-          <md-button ng-click='reset()' class="md-raised">Reset</md-button>
-        </form>
-      </md-card-content>
-    </md-card>
+  <md-content layout='row'>
+    <div id='listOfTeamDiv' flex='66'>
+      <md-card ng-repeat='team in teams'>
+        <md-card-content>
+          {{team.name}}
+          <br>
+          <a ui-sref='leagues/id/team/id/players({leagueId: league._id, teamId:team._id})'>
+            <small>Click here to view Team detais</small>
+          </a>
+          <div id='updateTeam'>
+            <img src="../img/delete.png" ng-click='removeTeam(team._id)'>  
+            <img src='../img/edit.png' ng-click='editTeamInit(team._id)'>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div flex layout='column'>
 
-    <!-- Update Team section -->
-    <md-card id='team' ng-show='editTeamDiv'>
-      <md-toolbar id='teamBar'>
-        <h2 class="md-toolbar-tools">
-          <span>Edit League</span>
-        </h2>
-      </md-toolbar>
-      <md-card-content>
-        <form name='editTeamForm'>
-          <md-input-container>
-            <label>Enter New Team Name</label>
-            <input ng-model='updateTeam.name' class='inputField' name='teamName'>
-          </md-input-container>
-          <md-input-container>
-            <label>Number of Games Played</label>
-            <input ng-model='updateTeam.numberOfGamesPlayed' class='inputField' name='updateTeamDuration'>
-          </md-input-container>
-          <md-input-container>
-            <label>Number of Goals Scored</label>
-            <input ng-model='updateTeam.numberOfGoalsScored' class='inputField' name='updateTeamDuration'>
-          </md-input-container>
-          <md-input-container>
-            <label>Number of Goals Conceded</label>
-            <input ng-model='updateTeam.numberOfGoalsConceded' class='inputField' name='updateTeamDuration'>
-          </md-input-container>
-          <md-button type='submit' class="md-raised" ng-click='editTeam()'>Update League</md-button>
-        </form>
-      </md-card-content>
-    </md-card>
-  </div>
+    
+      <!-- Create Team for a particular League -->
+      <md-card id='createTeam' ng-show='createTeamForm'>
+        <md-toolbar id='createTeamBar'>
+          <h2 class="md-toolbar-tools">
+            <span>Add Teams to League</span>
+          </h2>
+        </md-toolbar>
+        <md-card-content>
+          <form id='inputField' name='teamForm' novalidate>
+            <md-input-container>
+              <label>Team Name</label>
+              <input required name="teamName" ng-model="team.name" class='inputField'>
+              <div ng-messages="teamForm.teamName.$error">
+                <div ng-message="required">This is required.</div>
+              </div>
+            </md-input-container>
+            <md-button type='submit' class="md-raised" ng-click='addTeam()' ng-disabled="teamForm.$invalid">Add Team</md-button>
+            <md-button ng-click='reset()' class="md-raised">Reset</md-button>
+          </form>
+        </md-card-content>
+      </md-card>
+
+      <!-- Update Team section -->
+      <md-card id='team' ng-show='editTeamDiv'>
+        <md-toolbar id='teamBar'>
+          <h2 class="md-toolbar-tools">
+            <span>Edit League</span>
+          </h2>
+        </md-toolbar>
+        <md-card-content>
+          <form name='editTeamForm'>
+            <md-input-container>
+              <label>Enter New Team Name</label>
+              <input ng-model='updateTeam.name' class='inputField' name='teamName'>
+            </md-input-container>
+            <md-input-container>
+              <label>Number of Games Played</label>
+              <input ng-model='updateTeam.numberOfGamesPlayed' class='inputField' name='updateTeamDuration'>
+            </md-input-container>
+            <md-input-container>
+              <label>Number of Goals Scored</label>
+              <input ng-model='updateTeam.numberOfGoalsScored' class='inputField' name='updateTeamDuration'>
+            </md-input-container>
+            <md-input-container>
+              <label>Number of Goals Conceded</label>
+              <input ng-model='updateTeam.numberOfGoalsConceded' class='inputField' name='updateTeamDuration'>
+            </md-input-container>
+            <md-button type='submit' class="md-raised" ng-click='editTeam()'>Update League</md-button>
+          </form>
+        </md-card-content>
+      </md-card>
+    </div>
+  </md-content>
 </md-content>

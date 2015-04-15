@@ -1,28 +1,36 @@
 var leaGo = angular.module('leaGo', [
-  'ngRoute', 
+  'ui.router', 
   'ngMaterial'
   // 'lodash'
   ])
-  .config(['$routeProvider',
-    function($routeProvider) {
-      $routeProvider.
-      when('/home', {
+  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
+    function($stateProvider, $urlRouterProvider, $locationProvider) {
+      //$locationProvider.hashPrefix('!');
+      
+      $urlRouterProvider.otherwise('/home');
+      $stateProvider.
+      state('home', {
+        url: '/home',
         templateUrl: '../views/home.html'
       }).
-      when('/leagues', {
+      state('leagues', {
+        url: '/leagues',
         templateUrl: '../views/leagues.html',
         controller: 'leagueCtrl'
       }).
-      when('/leagues/:leagueId', {
+      state('leagues/id', {
+        url: '/leagues/:leagueId',
         templateUrl: '../views/Games.html',
         controller: 'leagueCtrl'
       }).
-      when('/leagues/:leagueId/teams/:teamId/players', {
+      state('leagues/id/team/id/players', {
+        url: '/leagues/:leagueId/teams/:teamId/players',
         templateUrl: '../views/teamDetails.html',
         controller: 'leagueCtrl'
-      }).
+      })/*.
       otherwise({
         redirectTo: '/home'
-      });
+      })*/;
+      $locationProvider.html5Mode(true);
     }
   ]);

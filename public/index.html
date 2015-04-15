@@ -3,6 +3,7 @@
   <head>
     <title>LeaGo</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <base href="/" />
     <link rel="stylesheet" href="lib/angular-material/angular-material.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
@@ -10,24 +11,25 @@
   <body>
     <md-tabs class="md-accent" md-selected="data.selectedIndex">
       <md-tab id="tab1" aria-controls="tab1-content" style='color: white'>
-        <a href='#/home'>LeaGo</a>
+        <a ui-sref='home'>LeaGo</a>
       </md-tab>
       <md-tab id="tab2" aria-controls="tab2-content" ng-disabled="data.secondLocked">
-        <a href='#/home'>HOME</a>
+        <a ui-sref='home' target='_self'>HOME</a>
       </md-tab>
       <md-tab id="tab3" aria-controls="tab3-content">
-        <a href='#/leagues'>LEAGUES</a>
+        <a ui-sref='leagues'>LEAGUES</a>
       </md-tab>
     </md-tabs>
    <!--  -->
 
-    <md-content class='container' ng-view>
+    <md-content class='container' ui-view>
 
     </md-content>
 
 
     <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular-route/angular-route.js"></script>
+    <!-- <script src="lib/angular-ui-router/angular-ui-router.js"></script> -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
     <script src="lib/angular-aria/angular-aria.js"></script>
     <script src="lib/angular-animate/angular-animate.js"></script>
     <script src="lib/angular-material/angular-material.js"></script>
