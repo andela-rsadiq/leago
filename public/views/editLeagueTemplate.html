@@ -1,0 +1,20 @@
+<md-dialog aria-label='editLeagueSection' class='editLeagueDiv' id='league' ng-show='editLeagueDiv'>
+    <md-toolbar id='leagueBar'>
+      <h2 class="md-toolbar-tools">
+        <span>Edit League</span>
+      </h2>
+    </md-toolbar>
+    <div>
+      <form name='editLeagueForm' id='editLeagueForm'>
+        <md-input-container>
+          <label>Enter New League Name</label>
+          <input ng-model='updateLeague.name' class='inputField' name='leagueName'>
+        </md-input-container>
+        <md-input-container>
+          <label>Duration of Tournament</label>
+          <input ng-model='updateLeague.durationOfTournament' class='inputField' name='leagueDuration'>
+        </md-input-container>
+        <md-button type='submit' class="md-raised" ng-click='editLeague()'>Update League</md-button>
+        <md-button type='submit' class="md-raised" ng-click='hideEditLeague()'>Hide</md-button>
+      </form>
+</md-dialog>
